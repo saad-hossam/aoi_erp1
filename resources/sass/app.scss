@@ -1,0 +1,10 @@
+// 1. Load variables first
+@use 'variables' as *;
+
+// 2. Load Bootstrap after variables (so overrides apply)
+@use 'bootstrap/scss/bootstrap' as *;
+
+// 3. Then your custom styles
+body {
+  font-family: 'Nunito', sans-serif;
+}

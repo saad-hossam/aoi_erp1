@@ -1,0 +1,45 @@
+[0;1;32m●[0m docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Wed 2026-09-23 07:54:20 EEST; 54min ago
+TriggeredBy: [0;1;32m●[0m docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 1542 (dockerd)
+      Tasks: 220
+     Memory: 90.7M
+     CGroup: /system.slice/docker.service
+             ├─1542 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+             ├─4870 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8081 -container-ip 172.22.0.2 -container-port 80 -use-listen-fd
+             ├─4877 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8081 -container-ip 172.22.0.2 -container-port 80 -use-listen-fd
+             ├─4909 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3306 -container-ip 172.22.0.3 -container-port 3306 -use-listen-fd
+             ├─4915 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3306 -container-ip 172.22.0.3 -container-port 3306 -use-listen-fd
+             ├─4949 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3307 -container-ip 172.30.0.2 -container-port 3306 -use-listen-fd
+             ├─4957 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3307 -container-ip 172.30.0.2 -container-port 3306 -use-listen-fd
+             ├─5057 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 2222 -container-ip 172.22.0.4 -container-port 22 -use-listen-fd
+             ├─5065 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 2222 -container-ip 172.22.0.4 -container-port 22 -use-listen-fd
+             ├─5074 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3000 -container-ip 172.22.0.4 -container-port 3000 -use-listen-fd
+             ├─5081 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3000 -container-ip 172.22.0.4 -container-port 3000 -use-listen-fd
+             ├─5088 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 3001 -container-ip 172.22.0.4 -container-port 3001 -use-listen-fd
+             ├─5096 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 3001 -container-ip 172.22.0.4 -container-port 3001 -use-listen-fd
+             ├─5102 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 4200 -container-ip 172.22.0.4 -container-port 4200 -use-listen-fd
+             ├─5110 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 4200 -container-ip 172.22.0.4 -container-port 4200 -use-listen-fd
+             ├─5118 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 5173 -container-ip 172.22.0.4 -container-port 5173 -use-listen-fd
+             ├─5125 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 5173 -container-ip 172.22.0.4 -container-port 5173 -use-listen-fd
+             ├─5133 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8001 -container-ip 172.22.0.4 -container-port 8000 -use-listen-fd
+             ├─5142 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8001 -container-ip 172.22.0.4 -container-port 8000 -use-listen-fd
+             ├─5150 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8080 -container-ip 172.22.0.4 -container-port 8080 -use-listen-fd
+             ├─5157 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8080 -container-ip 172.22.0.4 -container-port 8080 -use-listen-fd
+             ├─5187 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 80 -container-ip 172.22.0.6 -container-port 80 -use-listen-fd
+             ├─5194 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 80 -container-ip 172.22.0.6 -container-port 80 -use-listen-fd
+             ├─5201 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 443 -container-ip 172.22.0.6 -container-port 443 -use-listen-fd
+             └─5211 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 443 -container-ip 172.22.0.6 -container-port 443 -use-listen-fd
+
+سبت 23 07:54:15 mustafa dockerd[1542]: time="2026-09-23T07:54:15.574155933+03:00" level=info msg="Loading containers: done."
+سبت 23 07:54:20 mustafa dockerd[1542]: time="2026-09-23T07:54:20.293663702+03:00" level=info msg="Docker daemon" commit=01f442b containerd-snapshotter=false storage-driver=overlay2 version=28.1.1
+سبت 23 07:54:20 mustafa dockerd[1542]: time="2026-09-23T07:54:20.295728628+03:00" level=info msg="Initializing buildkit"
+سبت 23 07:54:20 mustafa dockerd[1542]: time="2026-09-23T07:54:20.387947434+03:00" level=info msg="Completed buildkit initialization"
+سبت 23 07:54:20 mustafa dockerd[1542]: time="2026-09-23T07:54:20.395984248+03:00" level=info msg="Daemon has completed initialization"
+سبت 23 07:54:20 mustafa dockerd[1542]: time="2026-09-23T07:54:20.396057264+03:00" level=info msg="API listen on /run/docker.sock"
+سبت 23 07:54:20 mustafa systemd[1]: Started Docker Application Container Engine.
+سبت 23 08:47:35 mustafa dockerd[1542]: time="2026-09-23T08:47:35.896476223+03:00" level=warning msg="Error getting v2 registry: Get \"https://registry-1.docker.io/v2/\": dial tcp [2600:1f18:2148:bc00:d220:7e1b:395f:a75a]:443: connect: network is unreachable"
+سبت 23 08:47:35 mustafa dockerd[1542]: time="2026-09-23T08:47:35.897733896+03:00" level=info msg="Attempting next endpoint for pull after error: Get \"https://registry-1.docker.io/v2/\": dial tcp [2600:1f18:2148:bc00:d220:7e1b:395f:a75a]:443: connect: network is unreachable"
+سبت 23 08:47:35 mustafa dockerd[1542]: time="2026-09-23T08:47:35.911635780+03:00" level=error msg="Handler for POST /v1.49/images/create returned error: Get \"https://registry-1.docker.io/v2/\": dial tcp [2600:1f18:2148:bc00:d220:7e1b:395f:a75a]:443: connect: network is unreachable"
