@@ -19,7 +19,8 @@
                      <div class='form-floating mb-3'>
     <select class='form-select form-control_gray @error('email') is-invalid @enderror' name='email' id='email' required>
         <option value='' disabled {{ old('email') ? '' : 'selected' }}>Select Unit *</option>
-        @foreach ($units as $unit)
+        @foreach (($units ?? collect()) as $unit)
+        {{-- @foreach ($units as $unit) --}}
             <option value='{{ $unit->unit_code }}' {{ old('email') == $unit->unit_code ? 'selected' : '' }}>
                 {{ $unit->unit_name }}
             </option>
@@ -60,7 +61,7 @@
                             @enderror
                         </div>
                         <button class='btn btn-primary w-100 text-uppercase' type='submit'>Log In</button>
-                        
+
                     </form>
                 </div>
             </div>

@@ -58,7 +58,7 @@ return [
             'edition' => env('DB_EDITION', 'ora$base'),
             'server_version' => env('DB_SERVER_VERSION', '19c'),
             'options' => extension_loaded('oci8') ? [
-                PDO::ATTR_CASE => PDO::CASE_NATURAL,
+                PDO::ATTR_CASE => PDO::CASE_LOWER,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             ] : [],
         ],

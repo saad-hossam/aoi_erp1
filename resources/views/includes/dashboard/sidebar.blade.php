@@ -1,153 +1,163 @@
 <div class="section-menu-left">
-                    <div class="box-logo">
-                        <a href="{{ route('admin.index') }}" id="site-logo-inner">
-                            <img class="" id="logo_header" alt="" src="{{ asset('assets/dashboard') }}/images/logo/logo.png"
-                                data-light="images/logo/logo.png" data-dark="images/logo/logo.png">
-                        </a>
-                        <div class="button-show-hide">
-                            <i class="icon-menu-left"></i>
+
+    <div class="box-logo">
+
+        <a href="{{ route('admin.index') }}" id="site-logo-inner">
+
+            <img
+                id="logo_header"
+                alt=""
+                src="{{ asset('assets/dashboard') }}/images/logo/logo.png"
+                data-light="images/logo/logo.png"
+                data-dark="images/logo/logo.png"
+            >
+
+        </a>
+
+        <div class="button-show-hide">
+            <i class="icon-menu-left"></i>
+        </div>
+
+    </div>
+
+    <div class="center">
+
+        {{-- Dashboard --}}
+        <div class="center-item">
+
+            <div class="center-heading">
+                Main Home
+            </div>
+
+            <ul class="menu-list">
+
+                <li class="menu-item">
+
+                    <a href="{{ route('admin.index') }}">
+
+                        <div class="icon">
+                            <i class="icon-grid"></i>
                         </div>
+
+                        <div class="text">
+                            Dashboard
+                        </div>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="center-item">
+
+            <div class="center-heading">
+                ERP System
+            </div>
+
+            @if(!empty($navigation))
+
+                <div class="erp-root-title">
+
+                    <div class="icon">
+                        <i class="icon-grid"></i>
                     </div>
-                    <div class="center">
-                        <div class="center-item">
-                            <div class="center-heading">Main Home</div>
-                            <ul class="menu-list">
-                                <li class="menu-item">
-                                    <a href="{{ route('admin.index') }}" class="">
-                                        <div class="icon"><i class="icon-grid"></i></div>
-                                        <div class="text">Dashboard</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="center-item">
-                            <ul class="menu-list">
-                                <li class="menu-item has-children">
-                                    <a href="javascript:void(0);" class="menu-item-button">
-                                        <div class="icon"><i class="icon-shopping-cart"></i></div>
-                                        <div class="text">Products</div>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('products.create') }}" class="">
-                                                <div class="text">Add Product</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('products.index') }}" class="">
-                                                <div class="text">Products</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item has-children">
-                                    <a href="javascript:void(0);" class="menu-item-button">
-                                        <div class="icon"><i class="icon-layers"></i></div>
-                                        <div class="text">Brand</div>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('brands.create') }}" class="">
-                                                <div class="text">New Brand</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('brands.index') }}" class="">
-                                                <div class="text">Brands</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item has-children">
-                                    <a href="javascript:void(0);" class="menu-item-button">
-                                        <div class="icon"><i class="icon-layers"></i></div>
-                                        <div class="text">Category</div>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('categories.create') }}" class="">
-                                                <div class="text">New Category</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('categories.index') }}" class="">
-                                                <div class="text">Categories</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
 
-                                <li class="menu-item has-children">
-                                    <a href="javascript:void(0);" class="menu-item-button">
-                                        <div class="icon"><i class="icon-file-plus"></i></div>
-                                        <div class="text">Order</div>
-                                    </a>
-                                    <ul class="sub-menu">
-                                        <li class="sub-menu-item">
-                                            <a href="{{ route('products.index') }}" class="">
-                                                <div class="text">Orders</div>
-                                            </a>
-                                        </li>
-                                        <li class="sub-menu-item">
-                                            <a href="order-tracking.html" class="">
-                                                <div class="text">Order tracking</div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="slider.html" class="">
-                                        <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Slider</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="{{ route('sizes.index') }}" class="">
-                                        <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Sizes</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="{{ route('colors.index') }}" class="">
-                                        <div class="icon"><i class="icon-image"></i></div>
-                                        <div class="text">Colors</div>
-                                    </a>
-                                <li class="menu-item">
-                                    <a href="{{ route('coupons.index') }}" class="">
-                                        <div class="icon"><i class="icon-grid"></i></div>
-                                        <div class="text">Coupns</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="{{ route('users.index') }}" class="">
-                                        <div class="icon"><i class="icon-user"></i></div>
-                                        <div class="text">User</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="{{ route('permissions.index') }}" class="">
-                                        <div class="icon"><i class="icon-user"></i></div>
-                                        <div class="text">Permissions</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="{{ route('roles.index') }}" class="">
-                                        <div class="icon"><i class="icon-user"></i></div>
-                                        <div class="text">Roles</div>
-                                    </a>
-                                </li>
-
-                                <li class="menu-item">
-                                    <a href="settings.html" class="">
-                                        <div class="icon"><i class="icon-settings"></i></div>
-                                        <div class="text">Settings</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="text">
+                        {{ $navigation['root']->label }}
                     </div>
+
                 </div>
+
+                <ul class="menu-list">
+
+                    @forelse($navigation['children'] as $item)
+
+                        @include(
+                            'dashboard.partials.navigation-item',
+                            ['item' => $item]
+                        )
+
+                    @empty
+
+                        <li class="menu-item">
+
+                            <div class="text text-muted">
+                                No navigation items
+                            </div>
+
+                        </li>
+
+                    @endforelse
+
+                </ul>
+
+            @endif
+
+        </div>
+        {{-- Administration --}}
+        <div class="center-item">
+
+            <div class="center-heading">
+                Administration
+            </div>
+
+            <ul class="menu-list">
+
+                <li class="menu-item">
+
+                    <a href="{{ route('admin.pages.index') }}">
+
+                        <div class="icon">
+                            <i class="icon-file"></i>
+                        </div>
+
+                        <div class="text">
+                            Pages
+                        </div>
+
+                    </a>
+
+                </li>
+
+                <li class="menu-item">
+
+                    <a href="{{ route('admin.tree-nodes.index') }}">
+
+                        <div class="icon">
+                            <i class="icon-grid"></i>
+                        </div>
+
+                        <div class="text">
+                            Tree Nodes
+                        </div>
+
+                    </a>
+
+                </li>
+
+                <li class="menu-item">
+
+                    <a href="{{ route('admin.tree-page-mappings.index') }}">
+
+                        <div class="icon">
+                            <i class="icon-link"></i>
+                        </div>
+
+                        <div class="text">
+                            Tree Page Mappings
+                        </div>
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
