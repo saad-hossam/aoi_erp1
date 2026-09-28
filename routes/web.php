@@ -8,6 +8,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DynamicPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('roles', RoleController::class)->except('show');        // CRUD on roles (+ their permissions)
     Route::resource('permissions', PermissionController::class)->except('show');
 });
+Route::get('/{path}', [DynamicPageController::class, 'show'])
+    ->where('path', '[A-Za-z0-9\-_]+')
+    ->name('dynamic.page');

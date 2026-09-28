@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -14,6 +15,7 @@ return new class extends Migration
         $teams = config('permission.teams');
         $tableNames = config('permission.table_names');
         $columnNames = config('permission.column_names');
+
         $pivotRole = $columnNames['role_pivot_key'] ?? 'role_id';
         $pivotPermission = $columnNames['permission_pivot_key'] ?? 'permission_id';
 
@@ -43,12 +45,19 @@ return new class extends Migration
             $table->string('guard_name', 255);
             $table->timestamps();
 
+
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name'], 'roles_team_name_guard_uq');
             } else {
                 $table->unique(['name', 'guard_name'], 'roles_name_guard_unique');
             }
         });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Model Has Permissions
+        |--------------------------------------------------------------------------
+        */
 
         // ============== MODEL HAS PERMISSIONS ==============
         Schema::create($tableNames['model_has_permissions'], static function (Blueprint $table) use ($tableNames, $columnNames, $pivotPermission, $teams) {
@@ -127,7 +136,11 @@ return new class extends Migration
         });
 
         app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
+            ->store(
+                config('permission.cache.store') != 'default'
+                    ? config('permission.cache.store')
+                    : null
+            )
             ->forget(config('permission.cache.key'));
     }
 
@@ -139,13 +152,15 @@ return new class extends Migration
         $tableNames = config('permission.table_names');
 
         if (empty($tableNames)) {
-            throw new \Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
+            throw new \Exception(
+                'Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.'
+            );
         }
 
-        Schema::drop($tableNames['role_has_permissions']);
-        Schema::drop($tableNames['model_has_roles']);
-        Schema::drop($tableNames['model_has_permissions']);
-        Schema::drop($tableNames['roles']);
-        Schema::drop($tableNames['permissions']);
+        Schema::dropIfExists($tableNames['role_has_permissions']);
+        Schema::dropIfExists($tableNames['model_has_roles']);
+        Schema::dropIfExists($tableNames['model_has_permissions']);
+        Schema::dropIfExists($tableNames['roles']);
+        Schema::dropIfExists($tableNames['permissions']);
     }
 };
