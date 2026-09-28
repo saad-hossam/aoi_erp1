@@ -14,7 +14,7 @@
 
             <form class="form-search flex-grow">
                 <fieldset class="name">
-                    <input type="text" placeholder="Search here..." class="show-search" name="name" tabindex="2"
+                    <input type="text" placeholder="ابحث هنا..." class="show-search" name="name" tabindex="2"
                         value="" aria-required="true" required="">
                 </fieldset>
                 <div class="button-submit">
@@ -23,7 +23,7 @@
                 <div class="box-content-search" id="box-content-search">
                     <ul class="mb-24">
                         <li class="mb-14">
-                            <div class="body-title">Top selling product</div>
+                            <div class="body-title">المنتجات الأكثر مبيعاً</div>
                         </li>
                         <li class="mb-14">
                             <div class="divider"></div>
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
-                                            <a href="product-list.html" class="body-text">Dog Food
+                                            <a href="product-list.html" class="body-text">طعام الكلاب
                                                 Rachael Ray Nutrish®</a>
                                         </div>
                                     </div>
@@ -52,8 +52,8 @@
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
-                                            <a href="product-list.html" class="body-text">Natural
-                                                Dog Food Healthy Dog Food</a>
+                                            <a href="product-list.html" class="body-text">طعام الكلاب
+                                                الطبيعي طعام الكلاب الصحي</a>
                                         </div>
                                     </div>
                                 </li>
@@ -68,7 +68,7 @@
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
                                             <a href="product-list.html" class="body-text">Freshpet
-                                                Healthy Dog Food and Cat</a>
+                                                طعام الكلاب والقطط الصحي</a>
                                         </div>
                                     </div>
                                 </li>
@@ -77,7 +77,7 @@
                     </ul>
                     <ul class="">
                         <li class="mb-14">
-                            <div class="body-title">Order product</div>
+                            <div class="body-title">طلب المنتج</div>
                         </li>
                         <li class="mb-14">
                             <div class="divider"></div>
@@ -92,7 +92,7 @@
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
                                             <a href="product-list.html" class="body-text">Sojos
-                                                Crunchy Natural Grain Free...</a>
+                                                طبيعي مقرمش خالٍ من الحبوب...</a>
                                         </div>
                                     </div>
                                 </li>
@@ -106,8 +106,8 @@
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
-                                            <a href="product-list.html" class="body-text">Kristin
-                                                Watson</a>
+                                            <a href="product-list.html" class="body-text">كريستين
+                                                واتسون</a>
                                         </div>
                                     </div>
                                 </li>
@@ -121,8 +121,8 @@
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
-                                            <a href="product-list.html" class="body-text">Mega
-                                                Pumpkin Bone</a>
+                                            <a href="product-list.html" class="body-text">ميجا
+                                                عظمة اليقطين</a>
                                         </div>
                                     </div>
                                 </li>
@@ -136,8 +136,8 @@
                                     </div>
                                     <div class="flex items-center justify-between gap20 flex-grow">
                                         <div class="name">
-                                            <a href="product-list.html" class="body-text">Mega
-                                                Pumpkin Bone</a>
+                                            <a href="product-list.html" class="body-text">ميجا
+                                                عظمة اليقطين</a>
                                         </div>
                                     </div>
                                 </li>
@@ -150,7 +150,7 @@
         </div>
         <div class="header-grid">
 
-            <div class="popup-wrap message type-header">
+            {{-- <div class="popup-wrap message type-header">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -161,7 +161,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
                         <li>
-                            <h6>Notifications</h6>
+                            <h6>الإشعارات</h6>
                         </li>
                         <li>
                             <div class="message-item item-1">
@@ -169,7 +169,7 @@
                                     <i class="icon-noti-1"></i>
                                 </div>
                                 <div>
-                                    <div class="body-title-2">Discount available</div>
+                                    <div class="body-title-2">خصم متاح</div>
                                     <div class="text-tiny">Morbi sapien massa, ultricies at rhoncus
                                         at, ullamcorper nec diam</div>
                                 </div>
@@ -181,7 +181,7 @@
                                     <i class="icon-noti-2"></i>
                                 </div>
                                 <div>
-                                    <div class="body-title-2">Account has been verified</div>
+                                    <div class="body-title-2">تم التحقق من الحساب</div>
                                     <div class="text-tiny">Mauris libero ex, iaculis vitae rhoncus
                                         et</div>
                                 </div>
@@ -193,7 +193,7 @@
                                     <i class="icon-noti-3"></i>
                                 </div>
                                 <div>
-                                    <div class="body-title-2">Order shipped successfully</div>
+                                    <div class="body-title-2">تم شحن الطلب بنجاح</div>
                                     <div class="text-tiny">Integer aliquam eros nec sollicitudin
                                         sollicitudin</div>
                                 </div>
@@ -205,16 +205,16 @@
                                     <i class="icon-noti-4"></i>
                                 </div>
                                 <div>
-                                    <div class="body-title-2">Order pending: <span>ID 305830</span>
+                                    <div class="body-title-2">الطلب معلق: <span>ID 305830</span>
                                     </div>
                                     <div class="text-tiny">Ultricies at rhoncus at ullamcorper</div>
                                 </div>
                             </div>
                         </li>
-                        <li><a href="#" class="tf-button w-full">View all</a></li>
+                        <li><a href="#" class="tf-button w-full">عرض الكل</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
 
 
@@ -225,12 +225,13 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="header-user wg-user">
                             <span class="image">
-                                <img src="{{ asset('assets/dashboard') }}/images/avatar/user-1.png" alt="">
+                                {{-- <img src="{{ asset('assets/dashboard') }}/images/avatar/user-1.png" alt=""> --}}
                             </span>
                             <span class="flex flex-column">
-                                <span class="body-title mb-2">Kristin Watson</span>
-                                <span class="text-tiny">Admin</span>
-                            </span>
+                                <span class="body-title mb-2">{{ Auth::user()->name }}</span>
+<span class="text-tiny">
+    {{ Auth::user()->roles->first()?->name ?? 'لا يوجد دور' }}
+</span>                            </span>
                         </span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3">
@@ -239,7 +240,7 @@
                                 <div class="icon">
                                     <i class="icon-user"></i>
                                 </div>
-                                <div class="body-title-2">Account</div>
+                                <div class="body-title-2">الحساب</div>
                             </a>
                         </li>
                         <li>
@@ -247,7 +248,7 @@
                                 <div class="icon">
                                     <i class="icon-mail"></i>
                                 </div>
-                                <div class="body-title-2">Inbox</div>
+                                <div class="body-title-2">صندوق الوارد</div>
                                 <div class="number">27</div>
                             </a>
                         </li>
@@ -256,7 +257,7 @@
                                 <div class="icon">
                                     <i class="icon-file-text"></i>
                                 </div>
-                                <div class="body-title-2">Taskboard</div>
+                                <div class="body-title-2">لوحة المهام</div>
                             </a>
                         </li>
                         <li>
@@ -264,7 +265,7 @@
                                 <div class="icon">
                                     <i class="icon-headphones"></i>
                                 </div>
-                                <div class="body-title-2">Support</div>
+                                <div class="body-title-2">الدعم</div>
                             </a>
                         </li>
                         <li>
@@ -275,7 +276,7 @@
                                     <div class="icon">
                                         <i class="icon-log-out"></i>
                                     </div>
-                                    <div class="body-title-2">Logout</div>
+                                    <div class="body-title-2">تسجيل الخروج</div>
                                 </a>
                             </form>
                         </li>

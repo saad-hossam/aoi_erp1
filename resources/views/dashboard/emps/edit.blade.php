@@ -3,20 +3,20 @@
 <div class='main-content-inner'>
     <div class='main-content-wrap'>
         <div class='flex items-center flex-wrap justify-between gap20 mb-27'>
-            <h3>New role</h3>
+            <h3>Edit Employee #{{ $emp->EMP_NO }}</h3>
             <ul class='breadcrumbs flex items-center flex-wrap justify-start gap10'>
                 <li><a href='{{ route('dashboard') }}'><div class='text-tiny'>Dashboard</div></a></li>
                 <li><i class='icon-chevron-right'></i></li>
-                <li><a href='{{ route('roles.index') }}'><div class='text-tiny'>Roles</div></a></li>
+                <li><a href='{{ route('emps.index') }}'><div class='text-tiny'>Employees</div></a></li>
                 <li><i class='icon-chevron-right'></i></li>
-                <li><div class='text-tiny'>New role</div></li>
+                <li><div class='text-tiny'>Edit</div></li>
             </ul>
         </div>
         <div class='wg-box'>
-            <form method='POST' action="{{ route('roles.store') }}" class='form-new-product form-style-1'>
+            <form action='{{ route('emps.update', $emp->EMP_NO) }}' method='POST' class='form-new-product form-style-1'>
                 @csrf
-                
-                @include('dashboard.roles._form', ['submit' => 'Save Role'])
+                @method('PUT')
+                @include('dashboard.emps._form', ['submit' => 'Update Employee'])
             </form>
         </div>
     </div>

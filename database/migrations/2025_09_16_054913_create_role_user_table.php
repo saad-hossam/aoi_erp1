@@ -11,15 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // If the 'role_user' table already exists (e.g., from a legacy system), skip.
+        if (Schema::hasTable('role_user')) {
+            return;
+        }
+
         Schema::create('role_user', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('role_id');
+            // Oracle-safe ID
+            $table->bigInteger('id')->unsigned()->autoIncrement();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            // Foreign key columns
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('role_id')->unsigned();
 
-            $table->unique(['user_id','role_id']); // تمنع التكرار
+            // Explicit short FK names (Oracle 30-char limit)
+            $table->foreign('user_id', 'ru_user_foreign')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+
+            $table->foreign('role_id', 'ru_role_foreign')
+                  ->references('id')->on('roles')
+                  ->onDelete('cascade');
+
+            // Explicit short unique name
+            $table->unique(['user_id', 'role_id'], 'role_user_unique');
+
             $table->timestamps();
         });
     }

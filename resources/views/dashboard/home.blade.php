@@ -12,8 +12,8 @@
                                     <i class="icon-shopping-bag"></i>
                                 </div>
                                 <div>
-                                    <div class="body-text mb-2">Total Orders</div>
-                                    <h4>3</h4>
+                                    <div class="body-text mb-2">Total employees</div>
+                                    <h4>{{ $employees->count() }}</h4>
                                 </div>
                             </div>
                         </div>
@@ -185,6 +185,65 @@
             </div>
 
         </div>
+        <div class="tf-section mb-30">
+
+            <div class="wg-box">
+                <div class="flex items-center justify-between">
+                    <h5>Employees</h5>
+                    <div class="dropdown default">
+                        {{-- <form method="GET" action="{{ route('admin.index') }}" class="flex items-center gap10">
+                            <input type="text" name="search" placeholder="Search by name or employee no..." value="{{ $search }}">
+                            <button class="btn btn-secondary" type="submit"><i class="icon-search"></i></button>
+                        </form> --}}
+                    </div>
+                </div>
+                <div class="wg-table table-all-user">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 80px">#</th>
+                                    <th>Employee No</th>
+                                    <th>Name</th>
+                                    <th class="text-center">Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($employees as $employee)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $employee->EMP_NO }}</td>
+                                    <td>{{ $employee->USER_NAME }}</td>
+                                    <td class="text-center">{{ $employee->EMP_STATUS }}</td>
+                                    <td class="text-center">
+                                        @if (auth()->user()->isAdmin())
+                                        <a href="{{ route('emps.edit', $employee->EMP_NO) }}">
+                                            <div class="list-icon-function view-icon">
+                                                <div class="item eye">
+                                                    <i class="icon-eye"></i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">No employees found.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="divider">
+                        {{ $employees->links('pagination::bootstrap-5') }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="tf-section mb-30">
 
             <div class="wg-box">

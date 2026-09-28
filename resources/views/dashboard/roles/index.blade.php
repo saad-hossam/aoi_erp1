@@ -11,7 +11,7 @@
         <div class='flex items-center flex-wrap justify-between gap20 mb-27'>
             <h3>Roles</h3>
             <ul class='breadcrumbs flex items-center flex-wrap justify-start gap10'>
-                <li><a href='{{ route('admin.index') }}'><div class='text-tiny'>Dashboard</div></a></li>
+                <li><a href='{{ route('dashboard') }}'><div class='text-tiny'>Dashboard</div></a></li>
                 <li><i class='icon-chevron-right'></i></li>
                 <li><div class='text-tiny'>Roles</div></li>
             </ul>
@@ -22,7 +22,7 @@
                 <div class='wg-filter flex-grow'>
                     <form class='form-search' method="GET" action="{{ route('roles.index') }}">
                         <fieldset class='name'>
-                            <input type='text' placeholder='Search here...' name='name' value="{{ request('name') }}">
+                            <input type='text' placeholder='Search here...' name='name' value="{{ $search }}">
                         </fieldset>
                         <div class='button-submit'>
                             <button type='submit'><i class='icon-search'></i></button>
