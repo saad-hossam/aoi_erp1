@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('welcome');
+        return redirect()->route('dashboard');
     }
 }

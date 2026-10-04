@@ -1,122 +1,196 @@
 @extends('layouts.dashboard.app')
-
 @section('content')
 
-<div class="container-fluid">
+{{-- Font Awesome --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="main-content-inner perm-page" dir="rtl">
+    <div class="main-content-wrap">
 
-        <div>
-            <h1 class="h3 mb-1">Mapping Details</h1>
-
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item">
-                        <a href="{{ route('admin.tree-page-mappings.index') }}">
-                            Tree Page Mappings
-                        </a>
-                    </li>
-                    <li class="breadcrumb-item active">
-                        Details
-                    </li>
-                </ol>
-            </nav>
+        {{-- الإشعارات --}}
+        <div class="perm-toast-wrap" id="permToastWrap">
+            @if(session('success'))
+                <div class="perm-toast">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+            @if(session('status'))
+                <div class="perm-toast">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ session('status') }}</span>
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="perm-toast error">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ session('error') }}</span>
+                </div>
+            @endif
         </div>
 
-        <div class="d-flex gap-2">
-
-            <a href="{{ route('admin.tree-page-mappings.edit', ['tree_page_mapping' => $mapping->id]) }}"
-               class="btn btn-primary">
-                Edit
-            </a>
-
-            <a href="{{ route('admin.tree-page-mappings.index') }}"
-               class="btn btn-secondary">
-                Back
-            </a>
-
+        {{-- رأس الصفحة --}}
+        <div class="perm-header">
+            <div class="perm-header-left">
+                <div class="perm-header-icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                <div>
+                    <h3>تفاصيل الربط</h3>
+                    <p>عرض كامل بيانات الربط بين العقدة والصفحة</p>
+                </div>
+            </div>
+            <div class="perm-header-actions">
+                <a class="perm-btn-back" href="{{ route('admin.tree-page-mappings.index') }}">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <span>رجوع</span>
+                </a>
+                <a class="perm-btn-edit" href="{{ route('admin.tree-page-mappings.edit', ['tree_page_mapping' => $mapping->id]) }}">
+                    <i class="fa-solid fa-pen"></i>
+                    <span>تعديل</span>
+                </a>
+            </div>
         </div>
 
+        {{-- البطاقة --}}
+        <div class="perm-card">
+
+            {{-- رأس البطاقة --}}
+            <div class="perm-card-head">
+                <div class="perm-card-head-left">
+                    <div class="perm-card-head-icon">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
+                    <div>
+                        <h4>معلومات الربط</h4>
+                        <p>جميع الحقول معروضة للقراءة فقط</p>
+                    </div>
+                </div>
+                <span class="perm-id-badge">
+                    <i class="fa-solid fa-hashtag"></i>
+                    المعرّف: {{ $mapping->id }}
+                </span>
+            </div>
+
+            {{-- جسم البطاقة --}}
+            <div class="perm-detail-body">
+                <div class="perm-detail-grid">
+
+                    {{-- معرّف الربط --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-hashtag"></i>
+                            معرّف الربط
+                        </div>
+                        <div class="perm-detail-value mono">{{ $mapping->id }}</div>
+                    </div>
+
+                    {{-- قيمة الشجرة --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-key"></i>
+                            قيمة الشجرة
+                        </div>
+                        <div class="perm-detail-value">
+                            <span class="perm-badge value">
+                                <i class="fa-solid fa-sitemap"></i>
+                                {{ $mapping->tree_value }}
+                            </span>
+                        </div>
+                    </div>
+
+                    {{-- عقدة الشجرة --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-sitemap"></i>
+                            عقدة الشجرة
+                        </div>
+                        @if($node)
+                            <div class="perm-detail-value">
+                                <div>
+                                    {{ $node->label }}
+                                    @if($node->label_eng)
+                                        <span class="perm-subtext">{{ $node->label_eng }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                        @else
+                            <div class="perm-detail-value empty">غير متوفر</div>
+                        @endif
+                    </div>
+
+                    {{-- الصفحة --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-file-lines"></i>
+                            الصفحة
+                        </div>
+                        <div class="perm-detail-value">
+                            @if($mapping->page?->name)
+                                {{ $mapping->page->name }}
+                            @else
+                                <span class="empty" style="font-style:italic;color:var(--p-muted);font-weight:400;">غير متوفر</span>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Slug الصفحة --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-link"></i>
+                            Slug الصفحة
+                        </div>
+                        @if($mapping->page?->slug)
+                            <div class="perm-detail-value mono">{{ $mapping->page->slug }}</div>
+                        @else
+                            <div class="perm-detail-value empty">غير متوفر</div>
+                        @endif
+                    </div>
+
+                    {{-- المسار --}}
+                    <div class="perm-detail-item">
+                        <div class="perm-detail-label">
+                            <i class="fa-solid fa-route"></i>
+                            المسار
+                        </div>
+                        @if($mapping->page?->route_path)
+                            <div class="perm-detail-value mono">{{ $mapping->page->route_path }}</div>
+                        @else
+                            <div class="perm-detail-value empty">غير متوفر</div>
+                        @endif
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- الفوتر --}}
+            <div class="perm-detail-footer">
+                <a href="{{ route('admin.tree-page-mappings.index') }}" class="perm-btn cancel">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <span>رجوع</span>
+                </a>
+                <a href="{{ route('admin.tree-page-mappings.edit', ['tree_page_mapping' => $mapping->id]) }}" class="perm-btn submit">
+                    <i class="fa-solid fa-pen"></i>
+                    <span>تعديل الربط</span>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="wg-box">
-
-        <h5 class="mb-4">
-            Mapping Information
-        </h5>
-
-        <div class="row">
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Mapping ID
-                </label>
-
-                <strong>
-                    {{ $mapping->id }}
-                </strong>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Tree Value
-                </label>
-
-                <strong>
-                    {{ $mapping->tree_value }}
-                </strong>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Tree Node
-                </label>
-
-                <strong>
-                    {{ $node?->label ?? 'N/A' }}
-                </strong>
-
-                @if($node?->label_eng)
-                    <small class="text-muted d-block">
-                        {{ $node->label_eng }}
-                    </small>
-                @endif
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Page
-                </label>
-
-                <strong>
-                    {{ $mapping->page?->name ?? 'N/A' }}
-                </strong>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Page Slug
-                </label>
-
-                <code>
-                    {{ $mapping->page?->slug ?? 'N/A' }}
-                </code>
-            </div>
-
-            <div class="col-md-6 mb-4">
-                <label class="text-muted d-block">
-                    Route
-                </label>
-
-                <code>
-                    {{ $mapping->page?->route_path ?? 'N/A' }}
-                </code>
-            </div>
-
-        </div>
-
-    </div>
-
 </div>
+
+<script>
+(function () {
+    'use strict';
+
+    /* إخفاء تلقائي للإشعارات */
+    document.querySelectorAll('.perm-toast').forEach(function (toast) {
+        setTimeout(function () {
+            toast.classList.add('hide');
+            setTimeout(function () { toast.remove(); }, 300);
+        }, 4500);
+    });
+
+})();
+</script>
 
 @endsection

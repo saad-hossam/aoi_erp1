@@ -1,249 +1,73 @@
 @extends('layouts.dashboard.app')
+
+
 @section('content')
-    <div class="main-content-wrap">
-        <div class="tf-section-2 mb-30">
-            <div class="flex gap20 flex-wrap-mobile">
-                <div class="w-half">
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-shopping-bag"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Total Orders</div>
-                                    <h4>3</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-dollar-sign"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Total Amount</div>
-                                    <h4>481.34</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-shopping-bag"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Pending Orders</div>
-                                    <h4>3</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="wg-chart-default">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-dollar-sign"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Pending Orders Amount</div>
-                                    <h4>481.34</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+        <div class="page-content">
+                <div class="page-header">
+                    <h1><i class="fas fa-shield-alt"></i> إدارة الصلاحيات</h1>
+                    <button class="btn btn-primary" id="addPermissionBtn"><i class="fas fa-plus"></i> إضافة صلاحية</button>
                 </div>
 
-                <div class="w-half">
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-shopping-bag"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Delivered Orders</div>
-                                    <h4>0</h4>
-                                </div>
-                            </div>
+                <!-- Stats Cards -->
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-key"></i></div>
+                        <div class="stat-info">
+                            <h3 id="totalCount">0</h3>
+                            <p>إجمالي الصلاحيات</p>
                         </div>
                     </div>
-
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-dollar-sign"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Delivered Orders Amount</div>
-                                    <h4>0.00</h4>
-                                </div>
-                            </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                        <div class="stat-info">
+                            <h3 id="visibleCount">0</h3>
+                            <p>الظاهرة حالياً</p>
                         </div>
                     </div>
-
-
-                    <div class="wg-chart-default mb-20">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-shopping-bag"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Canceled Orders</div>
-                                    <h4>0</h4>
-                                </div>
-                            </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info">
+                            <h3 id="activeCount">0</h3>
+                            <p>نشطة</p>
                         </div>
                     </div>
-
-
-                    <div class="wg-chart-default">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap14">
-                                <div class="image ic-bg">
-                                    <i class="icon-dollar-sign"></i>
-                                </div>
-                                <div>
-                                    <div class="body-text mb-2">Canceled Orders Amount</div>
-                                    <h4>0.00</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="wg-box">
-                <div class="flex items-center justify-between">
-                    <h5>Earnings revenue</h5>
-                    <div class="dropdown default">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <span class="icon-more"><i class="icon-more-horizontal"></i></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li>
-                                <a href="javascript:void(0);">This Week</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0);">Last Week</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap40">
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t1"></div>
-                                <div class="text-tiny">Revenue</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>$37,802</h4>
-                            <div class="box-icon-trending up">
-                                <i class="icon-trending-up"></i>
-                                <div class="body-title number">0.56%</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t2"></div>
-                                <div class="text-tiny">Order</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>$28,305</h4>
-                            <div class="box-icon-trending up">
-                                <i class="icon-trending-up"></i>
-                                <div class="body-title number">0.56%</div>
-                            </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-ban"></i></div>
+                        <div class="stat-info">
+                            <h3 id="inactiveCount">0</h3>
+                            <p>غير نشطة</p>
                         </div>
                     </div>
                 </div>
-                <div id="line-chart-8"></div>
-            </div>
 
-        </div>
-        <div class="tf-section mb-30">
-
-            <div class="wg-box">
-                <div class="flex items-center justify-between">
-                    <h5>Recent orders</h5>
-                    <div class="dropdown default">
-                        <a class="btn btn-secondary dropdown-toggle" href="#">
-                            <span class="view-all">View all</span>
-                        </a>
+                <!-- Table Card -->
+                <div class="table-card">
+                    <div class="table-toolbar">
+                        <h2><i class="fas fa-list" style="color:#3b82f6; margin-left:8px;"></i> قائمة الصلاحيات</h2>
+                        <div class="toolbar-actions">
+                            <button class="btn btn-outline btn-sm" id="bulkDeleteBtn" disabled><i class="fas fa-trash"></i> حذف المحدد</button>
+                            <button class="btn btn-outline btn-sm" id="clearSelectionBtn"><i class="fas fa-times"></i> إلغاء التحديد</button>
+                        </div>
                     </div>
-                </div>
-                <div class="wg-table table-all-user">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered">
+                        <table id="permissionsTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 80px">OrderNo</th>
-                                    <th>Name</th>
-                                    <th class="text-center">Phone</th>
-                                    <th class="text-center">Subtotal</th>
-                                    <th class="text-center">Tax</th>
-                                    <th class="text-center">Total</th>
-
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Order Date</th>
-                                    <th class="text-center">Total Items</th>
-                                    <th class="text-center">Delivered On</th>
-                                    <th></th>
+                                    <th class="checkbox-cell"><input type="checkbox" class="custom-checkbox" id="selectAllCheckbox"></th>
+                                    <th data-sort="id" class="active"># <i class="fas fa-sort"></i></th>
+                                    <th data-sort="name">الصلاحية <i class="fas fa-sort"></i></th>
+                                    <th data-sort="slug">المعرف <i class="fas fa-sort"></i></th>
+                                    <th data-sort="status">الحالة <i class="fas fa-sort"></i></th>
+                                    <th data-sort="created">تاريخ الإنشاء <i class="fas fa-sort"></i></th>
+                                    <th>إجراءات</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">Divyansh Kumar</td>
-                                    <td class="text-center">1234567891</td>
-                                    <td class="text-center">$172.00</td>
-                                    <td class="text-center">$36.12</td>
-                                    <td class="text-center">$208.12</td>
-
-                                    <td class="text-center">ordered</td>
-                                    <td class="text-center">2024-07-11 00:54:14</td>
-                                    <td class="text-center">2</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <a href="#">
-                                            <div class="list-icon-function view-icon">
-                                                <div class="item eye">
-                                                    <i class="icon-eye"></i>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <tbody id="tableBody">
+                                <!-- rows will be injected by JS -->
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-
-        </div>
-    </div>
 @endsection
+

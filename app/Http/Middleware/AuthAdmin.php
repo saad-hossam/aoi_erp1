@@ -5,29 +5,27 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthAdmin
 {
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Only administrators (EMP.ADMIN = 1, or the "admin" role) may pass.
+     * A logged-in employee who is NOT an admin gets a 403 – we no longer flush
+     * the session, which is what used to throw people back to the login page.
      */
     public function handle(Request $request, Closure $next): Response
     {
-      if(Auth::check()) {
-    if(Auth::user()->utype === 'ADM') {
-        return $next($request);
-    } else {
-        Session::flush();
-        return redirect()->route('login');
-    }
-} else {
-    Session::flush();
-    return redirect()->route('login');
-}
+        $user = Auth::user();
 
-}
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        if (! method_exists($user, 'isAdmin') || ! $user->isAdmin()) {
+            abort(403, 'This area is for administrators only.');
+        }
+
+        return $next($request);
+    }
 }

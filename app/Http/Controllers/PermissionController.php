@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Permission;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PermissionController extends Controller
 {
     public function index()
     {
-        $permissions = Permission::orderBy('name','ASC')->paginate(10);
+        $permissions = Permission::orderBy('name')->paginate(10);
+
         return view('dashboard.permissions.index', compact('permissions'));
     }
 
@@ -21,16 +22,13 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:permissions,name',
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('permissions', 'name')],
         ]);
 
-Permission::create([
-    'name' => $request->name,
-    'guard_name' => 'web',
-]);
+        Permission::create(['name' => $data['name'], 'guard_name' => 'web']);
 
-        return redirect()->route('permissions.index')->with('success','Permission created successfully.');
+        return redirect()->route('permissions.index')->with('success', 'Permission created successfully.');
     }
 
     public function edit(Permission $permission)
@@ -40,18 +38,28 @@ Permission::create([
 
     public function update(Request $request, Permission $permission)
     {
-        $request->validate([
-            'name' => 'required|string|max:255|unique:permissions,name,'.$permission->id,
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255', Rule::unique('permissions', 'name')->ignore($permission->id)],
         ]);
 
-        $permission->update($request->only('name'));
+        $permission->update(['name' => $data['name']]);
 
-        return redirect()->route('permissions.index')->with('success','Permission updated successfully.');
+        return redirect()->route('permissions.index')->with('success', 'Permission updated successfully.');
     }
 
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return redirect()->route('permissions.index')->with('success','Permission deleted successfully.');
+
+        return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
     }
+    public function bulkDelete(Request $request)
+{
+    $ids = $request->input('ids', []);
+    if (!empty($ids)) {
+        Permission::whereIn('id', $ids)->delete();
+    }
+    return redirect()->route('permissions.index')
+        ->with('success', 'Selected permissions deleted successfully.');
+}
 }

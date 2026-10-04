@@ -2,31 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Emp;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-
-
-    public function index()
+    /** Dashboard shown right after login. */
+    public function index(Request $request)
     {
-        return view('welcome');
-    }
+        $search = $request->query('search');
 
-    public function account_dashboard()
-    {
-        return view('front.account-dashboard');
-    }
+        $employees = Emp::query()
+            ->whereNotNull('USER_NAME')
+            ->search($search)
+            ->orderBy('USER_NAME')
+            ->paginate(10)
+            ->withQueryString();
 
+        return view('dashboard.home', compact('employees', 'search'));
+    }
 }

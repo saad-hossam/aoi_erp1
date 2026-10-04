@@ -2,28 +2,25 @@
 
 namespace Database\Seeders;
 
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\PermissionRegistrar;
 
 class RolePermissionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-  // Permissions
-    Permission::create(['name' => 'create users']);
-    Permission::create(['name' => 'edit users']);
-    Permission::create(['name' => 'delete users']);
-    Permission::create(['name' => 'view users']);
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-    // Roles
-    $admin = Role::create(['name' => 'admin']);
-    $editor = Role::create(['name' => 'editor']);
+        foreach (['view emps', 'create emps', 'edit emps', 'delete emps'] as $name) {
+            Permission::findOrCreate($name, 'web');
+        }
 
-    // Assign Permissions to Roles
-    $admin->givePermissionTo(Permission::all());
-    $editor->givePermissionTo(['view users']);    }
+        $admin  = Role::findOrCreate('admin', 'web');
+        $editor = Role::findOrCreate('editor', 'web');
+
+        $admin->syncPermissions(Permission::all());
+        $editor->syncPermissions(['view emps']);
+    }
 }
