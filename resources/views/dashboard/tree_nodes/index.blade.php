@@ -1,252 +1,427 @@
-
 @extends('layouts.dashboard.app')
-
 @section('content')
 
-<style>
-    .tree-node-value {
-        width: 100px;
-    }
+{{-- Font Awesome --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    .tree-node-label {
-        width: 220px;
-    }
 
-    .tree-node-label-eng {
-        width: 220px;
-    }
 
-    .tree-node-parent {
-        width: 120px;
-    }
-
-    .tree-node-level {
-        width: 80px;
-    }
-
-    .tree-node-type {
-        width: 120px;
-    }
-
-    .tree-node-actions {
-        width: 220px;
-        white-space: nowrap;
-    }
-</style>
-
-<div class="main-content-inner">
+<div class="main-content-inner perm-page" dir="rtl">
     <div class="main-content-wrap">
 
-        {{-- Page Header --}}
-        <div class="flex items-center flex-wrap justify-between gap20 mb-27">
-
-            <h3>Tree Nodes</h3>
-
-            <ul class="breadcrumbs flex items-center flex-wrap justify-start gap10">
-                <li>
-                    <a href="{{ route('admin.index') }}">
-                        <div class="text-tiny">Dashboard</div>
-                    </a>
-                </li>
-
-                <li>
-                    <i class="icon-chevron-right"></i>
-                </li>
-
-                <li>
-                    <div class="text-tiny">Tree Nodes</div>
-                </li>
-            </ul>
-
-        </div>
-
-        {{-- Main Box --}}
-        <div class="wg-box">
-
-            {{-- Search + Add --}}
-            <div class="flex items-center justify-between gap10 flex-wrap">
-
-                <div class="wg-filter flex-grow">
-
-                    <form
-                        class="form-search"
-                        method="GET"
-                        action="{{ route('admin.tree-nodes.index') }}"
-                    >
-                        <fieldset class="name">
-                            <input
-                                type="text"
-                                placeholder="Search here..."
-                                name="search"
-                                tabindex="2"
-                                value="{{ request('search') }}"
-                            >
-                        </fieldset>
-
-                        <div class="button-submit">
-                            <button type="submit">
-                                <i class="icon-search"></i>
-                            </button>
-                        </div>
-                    </form>
-
-                </div>
-
-                <a
-                    class="tf-button style-1 w208"
-                    href="{{ route('admin.tree-nodes.create') }}"
-                >
-                    <i class="icon-plus"></i>
-                    Add New Node
-                </a>
-
-            </div>
-
-            {{-- Success Message --}}
+        {{-- الإشعارات --}}
+        <div class="perm-toast-wrap" id="permToastWrap">
             @if(session('success'))
-                <p class="alert alert-success">
-                    {{ session('success') }}
-                </p>
+                <div class="perm-toast">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
             @endif
-
             @if(session('status'))
-                <p class="alert alert-success">
-                    {{ session('status') }}
-                </p>
+                <div class="perm-toast">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span>{{ session('status') }}</span>
+                </div>
             @endif
-
-            {{-- Error Message --}}
             @if(session('error'))
-                <p class="alert alert-danger">
-                    {{ session('error') }}
-                </p>
+                <div class="perm-toast error">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ session('error') }}</span>
+                </div>
             @endif
-
-            {{-- Validation Errors --}}
             @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                <div class="perm-toast error">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>{{ $errors->first() }}</span>
                 </div>
             @endif
-
-            {{-- Table --}}
-            <div class="wg-table table-all-user">
-                <div class="table-responsive">
-
-                    <table class="table table-striped table-bordered">
-
-                        <thead>
-                            <tr>
-                                <th class="tree-node-value">VALUE</th>
-                                <th class="tree-node-label">LABEL</th>
-                                {{-- <th class="tree-node-label-eng">LABEL ENG</th> --}}
-                                <th class="tree-node-parent">PARENT VALUE</th>
-                                <th class="tree-node-level">LEVEL</th>
-                                {{-- <th class="tree-node-type">TYPE</th> --}}
-                                <th class="tree-node-actions">ACTIONS</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @forelse($nodes as $node)
-
-                                <tr>
-                                    {{-- VALUE --}}
-                                    <td>{{ $node->value }}</td>
-
-                                    {{-- LABEL --}}
-                                    <td>{{ $node->label }}</td>
-
-                                    {{-- LABEL ENG --}}
-                                    {{-- <td>{{ $node->label_eng }}</td> --}}
-
-                                    {{-- PARENT VALUE --}}
-                                    <td>{{ $node->parent_value ?? '-' }}</td>
-
-                                    {{-- LEVEL --}}
-                                    <td>{{ $node->ilevel }}</td>
-
-                                    {{-- TYPE --}}
-                                    {{-- <td>{{ $node->node_type ?? '-' }}</td> --}}
-
-                                    {{-- ACTIONS --}}
-                                    <td>
-
-                                        {{-- View --}}
-                                        <a
-                                            href="{{ route('admin.tree-nodes.show', ['tree_node' => $node->value]) }}"
-                                            class="btn btn-sm btn-info"
-                                        >
-                                            View
-                                        </a>
-
-                                        {{-- Edit --}}
-                                        <a
-                                            href="{{ route('admin.tree-nodes.edit', ['tree_node' => $node->value]) }}"
-                                            class="tf-button style-1"
-                                        >
-                                            Edit
-                                        </a>
-
-                                        {{-- Delete --}}
-                                        @if($node->parent_value !== null)
-
-                                            <form
-                                                action="{{ route('admin.tree-nodes.destroy', ['tree_node' => $node->value]) }}"
-                                                method="POST"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Are you sure you want to delete this node?')"
-                                            >
-                                                @csrf
-                                                @method('DELETE')
-
-                                                <button
-                                                    type="submit"
-                                                    class="btn btn-sm btn-danger"
-                                                >
-                                                    Delete
-                                                </button>
-
-                                            </form>
-
-                                        @endif
-
-                                    </td>
-                                </tr>
-
-                            @empty
-
-                                <tr>
-                                    <td colspan="7" class="text-center">
-                                        No tree nodes found.
-                                    </td>
-                                </tr>
-
-                            @endforelse
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                {{-- Pagination --}}
-                @if(method_exists($nodes, 'links'))
-                    <div class="divider">
-                        {{ $nodes->links('pagination::bootstrap-5') }}
-                    </div>
-                @endif
-
-            </div>
-
         </div>
 
+        {{-- رأس الصفحة --}}
+        <div class="perm-header">
+            <div class="perm-header-left">
+                <div class="perm-header-icon">
+                    <i class="fa-solid fa-sitemap"></i>
+                </div>
+                <div>
+                    <h3>عقد الشجرة</h3>
+                    <p>إدارة جميع عقد الشجرة الهرمية</p>
+                </div>
+            </div>
+            <a class="perm-btn-add" href="{{ route('admin.tree-nodes.create') }}">
+                <i class="fa-solid fa-plus"></i>
+                <span>إضافة عقدة جديدة</span>
+            </a>
+        </div>
+
+        {{-- البطاقة --}}
+        <div class="perm-card">
+
+            {{-- شريط الأدوات --}}
+            <div class="perm-toolbar">
+                <div class="perm-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="permSearch" placeholder="بحث بالـ Value أو Label..." autocomplete="off">
+                </div>
+                <div class="perm-bulk" id="permBulkBar">
+                    <span class="perm-bulk-count" id="permBulkCount">0 محدد</span>
+                    <button type="button" class="perm-bulk-btn" id="permBulkDeleteBtn">
+                        <i class="fa-solid fa-trash-can"></i> حذف
+                    </button>
+                </div>
+            </div>
+
+            {{-- الجدول --}}
+            <div class="perm-table-wrap">
+                <table class="perm-table" id="permTable">
+                    <thead>
+                        <tr>
+                            <th class="col-check">
+                                <button type="button" class="perm-select-all" id="permSelectAll" title="تحديد الكل">
+                                    <span class="perm-select-all-box" aria-hidden="true">
+                                        <svg viewBox="0 0 16 16" class="perm-select-all-icon">
+                                            <path d="M3 8.5l3.5 3.5L13 5" fill="none" stroke="currentColor"
+                                                  stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                        <svg viewBox="0 0 16 16" class="perm-select-all-dash">
+                                            <path d="M4 8h8" fill="none" stroke="currentColor"
+                                                  stroke-width="2.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </th>
+                            <th class="col-index sortable" data-sort="index">
+                                # <span class="sort-icon">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="value">
+                                Value <span class="sort-icon">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="label">
+                                Label <span class="sort-icon">▲</span>
+                            </th>
+                            <th class="col-center sortable" data-sort="parent">
+                                Parent Value <span class="sort-icon">▲</span>
+                            </th>
+                            <th class="col-center sortable" data-sort="level">
+                                Level <span class="sort-icon">▲</span>
+                            </th>
+                            <th class="col-actions">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="permTableBody">
+                        @forelse($nodes as $node)
+                            <tr data-name="{{ strtolower($node->value . ' ' . $node->label . ' ' . ($node->parent_value ?? '')) }}"
+                                data-value="{{ strtolower($node->value) }}"
+                                data-label="{{ strtolower($node->label) }}"
+                                data-parent="{{ strtolower($node->parent_value ?? '') }}"
+                                data-level="{{ $node->ilevel }}">
+                                <td>
+                                    <input type="checkbox" class="perm-check perm-row-check" value="{{ $node->value }}">
+                                </td>
+                                <td>
+                                    <span class="perm-index">{{ $loop->iteration }}</span>
+                                </td>
+                                <td>
+                                    <span class="perm-badge value">
+                                        <i class="fa-solid fa-hashtag"></i>
+                                        {{ $node->value }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="perm-name">
+                                        <span class="perm-name-icon {{ $node->parent_value === null ? 'root' : '' }}">
+                                            <i class="fa-solid {{ $node->parent_value === null ? 'fa-crown' : 'fa-circle-nodes' }}"></i>
+                                        </span>
+                                        <span class="perm-name-text">{{ $node->label }}</span>
+                                    </div>
+                                </td>
+                                <td class="col-center">
+                                    @if($node->parent_value)
+                                        <span class="perm-badge value">
+                                            <i class="fa-solid fa-arrow-up"></i>
+                                            {{ $node->parent_value }}
+                                        </span>
+                                    @else
+                                        <span class="perm-muted">— جذر —</span>
+                                    @endif
+                                </td>
+                                <td class="col-center">
+                                    <span class="perm-badge level">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        {{ $node->ilevel }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="perm-actions">
+                                        <a href="{{ route('admin.tree-nodes.show', ['tree_node' => $node->value]) }}"
+                                           class="perm-action-btn view"
+                                           title="عرض">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('admin.tree-nodes.edit', ['tree_node' => $node->value]) }}"
+                                           class="perm-action-btn edit"
+                                           title="تعديل">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                        @if($node->parent_value !== null)
+                                            <button type="button"
+                                                    class="perm-action-btn delete perm-delete-btn"
+                                                    title="حذف"
+                                                    data-name="{{ $node->label }}"
+                                                    data-url="{{ route('admin.tree-nodes.destroy', ['tree_node' => $node->value]) }}">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" class="perm-empty">
+                                    <i class="fa-solid fa-inbox"></i>
+                                    لا توجد عقد. اضغط على "إضافة عقدة جديدة" للبدء.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- ترقيم الصفحات --}}
+            @if(method_exists($nodes, 'hasPages') && $nodes->hasPages())
+                <div class="perm-pagination">
+                    {{ $nodes->links('pagination::bootstrap-5') }}
+                </div>
+            @endif
+        </div>
     </div>
 </div>
+
+{{-- نافذة الحذف المنبثقة --}}
+<div class="perm-modal-overlay" id="permDeleteModal">
+    <div class="perm-modal">
+        <div class="perm-modal-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h4 id="permModalTitle">حذف العقدة؟</h4>
+        <p id="permModalText">لا يمكن التراجع عن هذا الإجراء.</p>
+        <div class="perm-modal-actions">
+            <button type="button" class="perm-modal-btn" id="permModalCancel">إلغاء</button>
+            <button type="button" class="perm-modal-btn danger" id="permModalConfirm">حذف</button>
+        </div>
+    </div>
+</div>
+
+{{-- نموذج الحذف الفردي --}}
+<form id="permDeleteForm" method="POST" style="display:none">
+    @csrf
+    @method('DELETE')
+</form>
+
+<script>
+(function () {
+    'use strict';
+
+    var tableBody   = document.getElementById('permTableBody');
+    var searchInput = document.getElementById('permSearch');
+    var selectAll   = document.getElementById('permSelectAll');
+    var bulkBar     = document.getElementById('permBulkBar');
+    var bulkCount   = document.getElementById('permBulkCount');
+    var bulkBtn     = document.getElementById('permBulkDeleteBtn');
+    var toastWrap   = document.getElementById('permToastWrap');
+
+    /* -------- Toast ديناميكي -------- */
+    function showToast(msg, type) {
+        type = type || 'success';
+        var t = document.createElement('div');
+        t.className = 'perm-toast' + (type === 'error' ? ' error' : '');
+        var icon = type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-check';
+        t.innerHTML = '<i class="fa-solid ' + icon + '"></i><span>' + msg + '</span>';
+        toastWrap.appendChild(t);
+        setTimeout(function () {
+            t.classList.add('hide');
+            setTimeout(function () { t.remove(); }, 300);
+        }, 4000);
+    }
+
+    /* -------- البحث -------- */
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            var q = this.value.trim().toLowerCase();
+            var rows = tableBody.querySelectorAll('tr[data-name]');
+            rows.forEach(function (row) {
+                row.style.display = row.getAttribute('data-name').indexOf(q) !== -1 ? '' : 'none';
+            });
+            updateBulkBar();
+        });
+    }
+
+    /* -------- الترتيب -------- */
+    var sortState = { key: null, dir: 'asc' };
+    document.querySelectorAll('.perm-table thead th.sortable').forEach(function (th) {
+        th.addEventListener('click', function () {
+            var key = th.getAttribute('data-sort');
+            if (sortState.key === key) {
+                sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortState.key = key;
+                sortState.dir = 'asc';
+            }
+            document.querySelectorAll('.perm-table thead th.sortable').forEach(function (h) {
+                h.classList.remove('sorted-asc', 'sorted-desc');
+            });
+            th.classList.add(sortState.dir === 'asc' ? 'sorted-asc' : 'sorted-desc');
+
+            var rows = Array.prototype.slice.call(tableBody.querySelectorAll('tr[data-name]'));
+            rows.sort(function (a, b) {
+                var av, bv;
+                if (key === 'index') {
+                    av = parseInt(a.querySelector('.perm-index').textContent.trim(), 10);
+                    bv = parseInt(b.querySelector('.perm-index').textContent.trim(), 10);
+                    return sortState.dir === 'asc' ? av - bv : bv - av;
+                }
+                if (key === 'level') {
+                    av = parseInt(a.getAttribute('data-level') || '0', 10);
+                    bv = parseInt(b.getAttribute('data-level') || '0', 10);
+                    return sortState.dir === 'asc' ? av - bv : bv - av;
+                }
+                av = a.getAttribute('data-' + key) || '';
+                bv = b.getAttribute('data-' + key) || '';
+                if (av < bv) return sortState.dir === 'asc' ? -1 : 1;
+                if (av > bv) return sortState.dir === 'asc' ? 1 : -1;
+                return 0;
+            });
+            rows.forEach(function (r) { tableBody.appendChild(r); });
+        });
+    });
+
+    /* -------- التحديد / الجماعي -------- */
+    function visibleChecks() {
+        return Array.prototype.filter.call(
+            tableBody.querySelectorAll('.perm-row-check'),
+            function (cb) { return cb.closest('tr').style.display !== 'none'; }
+        );
+    }
+
+    function updateBulkBar() {
+        var checks  = visibleChecks();
+        var checked = checks.filter(function (cb) { return cb.checked; });
+
+        bulkCount.textContent = checked.length + ' محدد';
+        bulkBar.classList.toggle('show', checked.length > 0);
+
+        if (selectAll) {
+            selectAll.classList.remove('is-all', 'is-partial');
+            if (checks.length > 0 && checked.length === checks.length) {
+                selectAll.classList.add('is-all');
+                selectAll.setAttribute('title', 'إلغاء تحديد الكل');
+            } else if (checked.length > 0) {
+                selectAll.classList.add('is-partial');
+                selectAll.setAttribute('title', 'تحديد الكل');
+            } else {
+                selectAll.setAttribute('title', 'تحديد الكل');
+            }
+        }
+    }
+
+    if (selectAll) {
+        selectAll.addEventListener('click', function () {
+            var allChecked = selectAll.classList.contains('is-all');
+            visibleChecks().forEach(function (cb) { cb.checked = !allChecked; });
+            updateBulkBar();
+        });
+    }
+
+    tableBody.addEventListener('change', function (e) {
+        if (e.target.classList && e.target.classList.contains('perm-row-check')) {
+            updateBulkBar();
+        }
+    });
+
+    /* النقر على الخلية الأولى بالكامل */
+    tableBody.addEventListener('click', function (e) {
+        var cell = e.target.closest('td');
+        if (!cell || cell.cellIndex !== 0) return;
+        if (e.target.classList.contains('perm-row-check')) return;
+        var cb = cell.querySelector('.perm-row-check');
+        if (!cb) return;
+        cb.checked = !cb.checked;
+        updateBulkBar();
+    });
+
+    /* -------- النافذة المنبثقة -------- */
+    var modal        = document.getElementById('permDeleteModal');
+    var modalTitle   = document.getElementById('permModalTitle');
+    var modalText    = document.getElementById('permModalText');
+    var modalCancel  = document.getElementById('permModalCancel');
+    var modalConfirm = document.getElementById('permModalConfirm');
+    var pending      = null;
+
+    function openModal(cfg) {
+        pending = cfg;
+        if (cfg.type === 'single') {
+            modalTitle.textContent = 'حذف العقدة؟';
+            modalText.textContent  = 'هل أنت متأكد من حذف "' + cfg.name + '"؟ لا يمكن التراجع عن هذا الإجراء.';
+        } else {
+            modalTitle.textContent = 'حذف ' + cfg.ids.length + ' عقد؟';
+            modalText.textContent  = 'سيتم إزالة العقد المحددة نهائيًا.';
+        }
+        modal.classList.add('active');
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+        pending = null;
+    }
+
+    modalCancel.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    tableBody.addEventListener('click', function (e) {
+        var btn = e.target.closest('.perm-delete-btn');
+        if (!btn) return;
+        openModal({
+            type: 'single',
+            name: btn.getAttribute('data-name'),
+            url:  btn.getAttribute('data-url'),
+            row:  btn.closest('tr')
+        });
+    });
+
+    bulkBtn.addEventListener('click', function () {
+        var ids = visibleChecks()
+            .filter(function (cb) { return cb.checked; })
+            .map(function (cb) { return cb.value; });
+        if (ids.length === 0) return;
+        showToast('الحذف الجماعي غير متاح لهذه الصفحة.', 'error');
+    });
+
+    modalConfirm.addEventListener('click', function () {
+        if (!pending) return;
+
+        if (pending.type === 'single') {
+            pending.row.classList.add('removing');
+            var form = document.getElementById('permDeleteForm');
+            form.action = pending.url;
+            setTimeout(function () { form.submit(); }, 250);
+        }
+    });
+
+    /* إخفاء تلقائي للإشعارات الأولية */
+    document.querySelectorAll('.perm-toast').forEach(function (toast) {
+        setTimeout(function () {
+            toast.classList.add('hide');
+            setTimeout(function () { toast.remove(); }, 300);
+        }, 4000);
+    });
+
+    updateBulkBar();
+
+})();
+</script>
 
 @endsection

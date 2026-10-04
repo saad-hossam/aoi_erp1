@@ -53,4 +53,13 @@ class PermissionController extends Controller
 
         return redirect()->route('permissions.index')->with('success', 'Permission deleted successfully.');
     }
+    public function bulkDelete(Request $request)
+{
+    $ids = $request->input('ids', []);
+    if (!empty($ids)) {
+        Permission::whereIn('id', $ids)->delete();
+    }
+    return redirect()->route('permissions.index')
+        ->with('success', 'Selected permissions deleted successfully.');
+}
 }
